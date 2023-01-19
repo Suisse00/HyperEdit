@@ -2,34 +2,53 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using HyperEdit.Source.View;
 
 namespace HyperEdit.View
 {
     public static class WindowHelper
     {
-        public static void Prompt(string prompt, Action<string> complete)
+        public static void Prompt(string prompt, Action<string> complete, ViewOptionalOptions viewOptionalOptions = null)
         {
             var str = "";
-            Window.Create(prompt, false, false, 200, 100, w =>
-            {
-                str = GUILayout.TextField(str);
-                if (GUILayout.Button("OK"))
+
+            Window.Create(prompt,
+                ViewOptionalOptions.Merge(
+                    new ViewOptionalOptions
+                    { 
+                        Width = 200,
+                        Height = 100
+                    },
+                    viewOptionalOptions
+                ),
+                w =>
                 {
-                    complete(str);
-                    w.Close();
-                }
-            });
+                    str = GUILayout.TextField(str);
+                    if (GUILayout.Button("OK"))
+                    {
+                        complete(str);
+                        w.Close();
+                    }
+                });
         }
 
-        public static void Error(string message)
+        public static void Error(string message, ViewOptionalOptions viewOptionalOptions = null)
         {
-            Window.Create("Error", false, false, 400, -1, w =>
-            {
-                GUILayout.Label(message);
-                if (GUILayout.Button("OK"))
+            Window.Create("Error",
+                ViewOptionalOptions.Merge(
+                    new ViewOptionalOptions
+                    {
+                        Width = 400,
+                    },
+                    viewOptionalOptions
+                ),
+                w =>
                 {
-                    w.Close();
-                }
+                    GUILayout.Label(message);
+                    if (GUILayout.Button("OK"))
+                    {
+                        w.Close();
+                    }
             });
         }
 
@@ -38,19 +57,25 @@ namespace HyperEdit.View
         {
             var collection = elements.Select(t => new {value = t, name = nameSelector(t)}).ToList();
             var scrollPos = new Vector2();
-            Window.Create(title, false, false, 300, 500, w =>
-            {
-                scrollPos = GUILayout.BeginScrollView(scrollPos);
-                foreach (var item in collection)
+            Window.Create(title,
+                new ViewOptionalOptions
                 {
-                    if (GUILayout.Button(item.name))
+                    Width = 300,
+                    Height = 500
+                },
+                w =>
+                {
+                    scrollPos = GUILayout.BeginScrollView(scrollPos);
+                    foreach (var item in collection)
                     {
-                        onSelect(item.value);
-                        w.Close();
-                        return;
+                        if (GUILayout.Button(item.name))
+                        {
+                            onSelect(item.value);
+                            w.Close();
+                            return;
+                        }
                     }
-                }
-                GUILayout.EndScrollView();
+                    GUILayout.EndScrollView();
             });
         }
     }
@@ -102,16 +127,16 @@ namespace HyperEdit.View
         private string _tempTooltip;
         private string _oldTooltip;
         internal string Title;
+        internal string UniqueId;
         private bool _shrinkHeight;
         private Rect _windowRect;
         private Action<Window> _drawFunc;
         private bool _isOpen;
 
-        public static void Create(string title, bool savepos, bool ensureUniqueTitle, int width, int height,
-            Action<Window> drawFunc)
+        public static void Create(string title, ViewOptionalOptions optionalOptions, Action<Window> drawFunc)
         {
             var allOpenWindows = GameObject.GetComponents<Window>();
-            if (ensureUniqueTitle && allOpenWindows.Any(w => w.Title == title))
+            if (!string.IsNullOrEmpty(optionalOptions.UniqueId) && allOpenWindows.Any(w => w.UniqueId == optionalOptions.UniqueId))
             {
                 Extensions.Log("Not opening window \"" + title + "\", already open");
                 return;
@@ -119,7 +144,11 @@ namespace HyperEdit.View
 
             var winx = 100;
             var winy = 100;
-            if (savepos)
+
+            var width = optionalOptions.Width ?? -1;
+            var height = optionalOptions.Height ?? -1;
+
+            if (optionalOptions.SavePosition ?? false)
             {
                 var winposNode = WindowPos.GetNode(title.Replace(' ', '_'));
                 if (winposNode != null)
@@ -158,6 +187,7 @@ namespace HyperEdit.View
             if (window._shrinkHeight)
                 height = 5;
             window.Title = title;
+            window.UniqueId = optionalOptions.UniqueId;
             window._windowRect = new Rect(winx, winy, width, height);
             window._drawFunc = drawFunc;
             if (allOpenWindows.Length == 0)

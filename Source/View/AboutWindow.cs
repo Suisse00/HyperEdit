@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HyperEdit.Source.View;
+using System;
 using UnityEngine;
 
 namespace HyperEdit.View
@@ -7,7 +8,17 @@ namespace HyperEdit.View
     {
         public static Action Create()
         {
-            return () => Window.Create("About", true, true, 500, 200, w => GUILayout.Label(AboutContents));
+            return () => Window.Create("About", 
+                new ViewOptionalOptions
+                {
+                    UniqueId = "About",
+
+                    Width = 500,
+                    Height = 200,
+
+                    SavePosition = true
+                },
+                w => GUILayout.Label(AboutContents));
         }
 
         private const string AboutContents = @"For support and contact information, please visit: http://www.kerbaltek.com/

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HyperEdit.Source.View;
+using System;
 using UnityEngine;
 
 namespace HyperEdit.View {
@@ -11,7 +12,17 @@ namespace HyperEdit.View {
     public static Action Create() {
       var view = View();
       //return () => Window.Create("Misc tools", true, true, 300, -1, w => view.Draw());
-      return () => Window.Create("Misc tools", true, true, vwidth, vheight, w => view.Draw());
+      return () => Window.Create("Misc tools",
+          new ViewOptionalOptions
+          {
+              UniqueId = "Misc tools",
+
+              Width = vwidth,
+              Height = vheight,
+
+              SavePosition = true
+          },
+          w => view.Draw());
     }
 
     public static IView View() {
