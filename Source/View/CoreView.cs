@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HyperEdit.Source.View;
+using System;
 
 namespace HyperEdit.View
 {
@@ -7,7 +8,16 @@ namespace HyperEdit.View
         public static Action Create(HyperEditBehaviour hyperedit)
         {
             var view = View(hyperedit);
-            return () => Window.Create("HyperEdit", true, true, 120, -1, w => view.Draw());
+            return () => Window.Create("HyperEdit",
+                new ViewOptionalOptions
+                {
+                    UniqueId = "HyperEdit",
+
+                    Width = 120,
+
+                    SavePosition = true
+                },
+                w => view.Draw());
         }
 
         public static IView View(HyperEditBehaviour hyperedit)

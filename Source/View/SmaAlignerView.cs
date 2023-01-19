@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using HyperEdit.Source.View;
 
 namespace HyperEdit.View
 {
@@ -8,7 +9,16 @@ namespace HyperEdit.View
         public static void Create()
         {
             var view = View();
-            Window.Create("SMA Aligner", true, true, 300, -1, w => view.Draw());
+            Window.Create("SMA Aligner",
+                new ViewOptionalOptions
+                {
+                    UniqueId = "SMA Aligner",
+
+                    Width = 300,
+
+                    SavePosition = true
+                },
+                w => view.Draw());
         }
 
         public static IView View()
