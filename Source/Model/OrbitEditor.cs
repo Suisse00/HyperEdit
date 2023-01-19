@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HyperEdit.Source;
+using HyperEdit.Source.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -248,12 +250,20 @@ namespace HyperEdit.Model
             var destinationMagnitude = newOrbit.getRelativePositionAtUT(Planetarium.GetUniversalTime()).magnitude;
             if (destinationMagnitude > newOrbit.referenceBody.sphereOfInfluence)
             {
-                View.WindowHelper.Error("Destination position was above the sphere of influence");
+                View.WindowHelper.Error(Resources.Error_DestinationPositionAboveSphereInfluence,
+                    new ViewOptionalOptions
+                    {
+                        UniqueId = nameof(Resources.Error_DestinationPositionAboveSphereInfluence)
+                    });
                 return;
             }
             if (destinationMagnitude < newOrbit.referenceBody.Radius)
             {
-                View.WindowHelper.Error("Destination position was below the surface");
+                View.WindowHelper.Error(Resources.Error_DestinationPositionBelowSurface,
+                    new ViewOptionalOptions
+                    {
+                        UniqueId = nameof(Resources.Error_DestinationPositionBelowSurface)
+                    });
                 return;
             }
 
