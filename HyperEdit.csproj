@@ -18,7 +18,7 @@
     <!-- // This is for Ezriilc's IDE, please leave this comment here, but change the next uncommented line to your own KSP install directory.
     <KspInstallDir Condition=" '$(KspInstallDir)' == '' ">C:\Games\KSP_win64</KspInstallDir>
 -->
-    <KspInstallDir Condition=" '$(KspInstallDir)' == '' ">C:\Games\KSP_win64</KspInstallDir>
+    <KspInstallDir Condition=" '$(KspInstallDir)' == '' ">C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program</KspInstallDir>
     <KspOutputPath>$(KspInstallDir)\GameData\Kerbaltek</KspOutputPath>
     <KspLibPath>$(KspInstallDir)\KSP_x64_Data\Managed</KspLibPath>
     <TargetFrameworkProfile />
