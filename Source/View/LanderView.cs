@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HyperEdit.Source.View;
+using System;
 
 namespace HyperEdit.View
 {
@@ -11,7 +12,16 @@ namespace HyperEdit.View
     public static Action Create()
     {
       var view = View();
-      return () => Window.Create("Lander", true, true, 200, -1, w => view.Draw());
+      return () => Window.Create("Lander",
+          new ViewOptionalOptions
+          {
+              UniqueId = "Lander",
+
+              Width = 200,
+
+              SavePosition = true
+          },
+          w => view.Draw());
     }
 
     // Use myTryParse to validate the string, and, if it is 0, to set it to 0.001f

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HyperEdit.Source.View;
+using System;
 using System.Collections.Generic;
 
 namespace HyperEdit.View
@@ -8,7 +9,16 @@ namespace HyperEdit.View
         public static Action Create()
         {
             var view = View();
-            return () => Window.Create("Orbit Editor", true, true, 300, -1, w => view.Draw());
+            return () => Window.Create("Orbit Editor",
+                new ViewOptionalOptions
+                {
+                    UniqueId = "Orbit Editor",
+
+                    Width = 300,
+
+                    SavePosition = true
+                },
+                w => view.Draw());
         }
 
         // Also known as "closure hell"

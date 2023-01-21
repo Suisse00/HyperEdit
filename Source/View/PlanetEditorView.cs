@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HyperEdit.Source.View;
+using System;
 
 using UnityEngine;
 
@@ -9,7 +10,16 @@ namespace HyperEdit.View
         public static Action Create()
         {
             var view = View();
-            return () => Window.Create("Planet editor", true, true, 400, -1, w => view.Draw());
+            return () => Window.Create("Planet editor",
+                new ViewOptionalOptions
+                {
+                    UniqueId = "Planet editor",
+
+                    Width = 400,
+
+                    SavePosition = true
+                },
+                w => view.Draw());
         }
 
         public static IView View()

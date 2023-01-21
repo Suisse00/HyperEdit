@@ -81,8 +81,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\*" />
-    <Compile Include="Source\*\*" />
+    <Compile Include="Source\Core.cs" />
+    <Compile Include="Source\Model\Lander.cs" />
+    <Compile Include="Source\Model\MiscEditor.cs" />
+    <Compile Include="Source\Model\OrbitEditor.cs" />
+    <Compile Include="Source\Model\PlanetEditor.cs" />
+    <Compile Include="Source\Model\SiSuffix.cs" />
+    <Compile Include="Source\Model\SmaAligner.cs" />
+    <Compile Include="Source\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\View\AboutWindow.cs" />
+    <Compile Include="Source\View\CoreView.cs" />
+    <Compile Include="Source\View\LanderView.cs" />
+    <Compile Include="Source\View\MiscEditorView.cs" />
+    <Compile Include="Source\View\OrbitEditorView.cs" />
+    <Compile Include="Source\View\PlanetEditorView.cs" />
+    <Compile Include="Source\View\SmaAlignerView.cs" />
+    <Compile Include="Source\View\View.cs" />
+    <Compile Include="Source\View\ViewOptionalOptions.cs" />
+    <Compile Include="Source\View\Window.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Source\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
