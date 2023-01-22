@@ -12,7 +12,10 @@ Pull requests are always welcome, as is any other input.  In fact, we rely on co
 
 Please leave our .version file as it is.  That's only here for CKAN, and it will be changed manually by the owner when we package the mod for release.
 
-To build:
-Change the .csproj file where notated to suit your own setup, but please keep it out of your commits when pushing or making a pull request.
+To build
+=========
+- Install Kerbal Space Program (the project use references from the game)
+- Change the .csproj file where notated to suit your own setup, but please keep it out of your commits when pushing or making a pull request.
+  - Update the `<KspInstallDir>` value in `<PropertyGroup>` to be the Kerbal Space Program path where the executable is
 
 VS2015+ is required, or other C#6 compliant C# compiler (khyperia uses mono 4.2.2, Ezriilc uses VS2019 Community)
